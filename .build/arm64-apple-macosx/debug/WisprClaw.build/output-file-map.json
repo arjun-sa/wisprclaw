@@ -16,12 +16,26 @@
     "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/WisprClawApp.swiftdeps",
     "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/WisprClawApp.dia"
   },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.dia"
+  },
   "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift": {
     "dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.d",
     "object": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
     "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager~partial.swiftmodule",
     "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swiftdeps",
     "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.dia"
+  },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.dia"
   },
   "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift": {
     "dependencies": "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.d",

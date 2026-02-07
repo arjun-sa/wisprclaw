@@ -32,7 +32,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
         },
         {
           "kind" : "file",
@@ -53,7 +61,9 @@
       "objects" : [
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AppDelegate.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/WisprClawApp.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.swift.o"
       ],
       "otherArguments" : [
@@ -128,7 +138,9 @@
       "sources" : [
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift"
       ],
       "tempsPath" : "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build",
@@ -148,7 +160,9 @@
       "-c",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift",
       "-I",
       "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/Modules",
@@ -249,7 +263,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
         },
         {
           "kind" : "file",

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("gatewayURL") private var gatewayURL = "http://localhost:8001"
+
     var body: some View {
         TabView {
             generalTab
@@ -13,7 +15,7 @@ struct SettingsView: View {
                     Label("AI Agent", systemImage: "brain")
                 }
         }
-        .frame(width: 400, height: 250)
+        .frame(width: 400, height: 300)
     }
 
     private var generalTab: some View {
@@ -25,6 +27,12 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Global Hotkey")
+            }
+
+            Section {
+                TextField("URL", text: $gatewayURL)
+            } header: {
+                Text("Transcription Gateway")
             }
         }
         .formStyle(.grouped)

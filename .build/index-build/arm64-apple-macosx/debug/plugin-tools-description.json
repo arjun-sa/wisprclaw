@@ -32,7 +32,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
         },
         {
           "kind" : "file",
@@ -53,7 +61,9 @@
       "objects" : [
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AppDelegate.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/WisprClawApp.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.swift.o"
       ],
       "otherArguments" : [
@@ -62,6 +72,8 @@
         "-incremental",
         "-enable-batch-mode",
         "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
         "-j10",
@@ -71,10 +83,6 @@
         "-module-cache-path",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
         "-parseable-output",
-        "-Xfrontend",
-        "-entry-point-function-name",
-        "-Xfrontend",
-        "WisprClaw_main",
         "-swift-version",
         "5",
         "-Xfrontend",
@@ -128,7 +136,9 @@
       "sources" : [
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift"
       ],
       "tempsPath" : "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build",
@@ -148,7 +158,9 @@
       "-c",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift",
       "-I",
       "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/Modules",
@@ -157,6 +169,8 @@
       "-incremental",
       "-enable-batch-mode",
       "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
       "-j10",
@@ -166,10 +180,6 @@
       "-module-cache-path",
       "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
       "-parseable-output",
-      "-Xfrontend",
-      "-entry-point-function-name",
-      "-Xfrontend",
-      "WisprClaw_main",
       "-swift-version",
       "5",
       "-Xfrontend",
@@ -249,7 +259,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
         },
         {
           "kind" : "file",
