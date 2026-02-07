@@ -36,6 +36,18 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift"
         },
         {
@@ -62,6 +74,9 @@
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AppDelegate.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/WisprClawApp.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.swift.o"
@@ -93,7 +108,7 @@
         "-plugin-path",
         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
         "-sdk",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-F",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
         "-F",
@@ -106,7 +121,7 @@
         "-Xcc",
         "-isysroot",
         "-Xcc",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-Xcc",
         "-F",
         "-Xcc",
@@ -138,6 +153,18 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o"
         },
         {
@@ -158,6 +185,9 @@
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift"
@@ -180,6 +210,9 @@
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift",
@@ -211,7 +244,7 @@
       "-plugin-path",
       "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
       "-sdk",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-F",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
       "-F",
@@ -224,7 +257,7 @@
       "-Xcc",
       "-isysroot",
       "-Xcc",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-Xcc",
       "-F",
       "-Xcc",
@@ -295,6 +328,18 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift"
         },
         {
@@ -322,6 +367,18 @@
         {
           "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o"
         },
         {
           "kind" : "file",

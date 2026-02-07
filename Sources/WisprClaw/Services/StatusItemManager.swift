@@ -6,17 +6,20 @@ final class StatusItemManager {
         case idle
         case listening
         case transcribing
+        case thinking
     }
 
     private let statusItem: NSStatusItem
     private let recorder = AudioRecorder()
     private let client = TranscriptionClient()
+    private let openClaw = OpenClawClient()
     private var appState: AppState = .idle
 
     // Dynamic menu items
     private var statusMenuItem: NSMenuItem!
     private var toggleMenuItem: NSMenuItem!
     private var lastResultMenuItem: NSMenuItem!
+    private var lastResponseMenuItem: NSMenuItem!
 
     init() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -41,10 +44,13 @@ final class StatusItemManager {
         toggleMenuItem.target = self
         menu.addItem(toggleMenuItem)
 
-        lastResultMenuItem = NSMenuItem(title: "", action: #selector(copyLastResult), keyEquivalent: "")
+        lastResultMenuItem = NSMenuItem(title: "Last transcription: —", action: #selector(copyLastResult), keyEquivalent: "")
         lastResultMenuItem.target = self
-        lastResultMenuItem.isHidden = true
         menu.addItem(lastResultMenuItem)
+
+        lastResponseMenuItem = NSMenuItem(title: "OpenClaw response: —", action: #selector(copyLastResponse), keyEquivalent: "")
+        lastResponseMenuItem.target = self
+        menu.addItem(lastResponseMenuItem)
 
         menu.addItem(.separator())
 
@@ -77,6 +83,10 @@ final class StatusItemManager {
             statusMenuItem.title = "Status: Transcribing"
             toggleMenuItem.isEnabled = false
             statusItem.button?.image = NSImage(systemSymbolName: "ellipsis.circle", accessibilityDescription: "WisprClaw Transcribing")
+        case .thinking:
+            statusMenuItem.title = "Status: Thinking"
+            toggleMenuItem.isEnabled = false
+            statusItem.button?.image = NSImage(systemSymbolName: "brain", accessibilityDescription: "WisprClaw Thinking")
         }
     }
 
@@ -104,26 +114,54 @@ final class StatusItemManager {
                 do {
                     let text = try await client.transcribe(fileURL: fileURL, gatewayURL: gatewayURL)
                     await MainActor.run {
-                        self.lastResultMenuItem.title = "Last: \(text)"
-                        self.lastResultMenuItem.isHidden = false
-                        self.updateState(.idle)
+                        self.lastResultMenuItem.title = "Last transcription: \(self.truncateForMenu(text))"
+                        self.lastResultMenuItem.toolTip = text
+                        self.updateState(.thinking)
+                    }
+
+                    do {
+                        let response = try await openClaw.send(text: text)
+                        await MainActor.run {
+                            self.lastResponseMenuItem.title = "OpenClaw response: \(self.truncateForMenu(response))"
+                            self.lastResponseMenuItem.toolTip = response
+                            self.updateState(.idle)
+                        }
+                    } catch {
+                        await MainActor.run {
+                            self.lastResponseMenuItem.title = "OpenClaw response: Error — \(error.localizedDescription)"
+                            self.lastResponseMenuItem.toolTip = nil
+                            self.updateState(.idle)
+                        }
                     }
                 } catch {
                     await MainActor.run {
-                        self.lastResultMenuItem.title = "Last: Error — \(error.localizedDescription)"
-                        self.lastResultMenuItem.isHidden = false
+                        self.lastResultMenuItem.title = "Last transcription: Error — \(error.localizedDescription)"
+                        self.lastResultMenuItem.toolTip = nil
                         self.updateState(.idle)
                     }
                 }
             }
-        case .transcribing:
+        case .transcribing, .thinking:
             break
         }
     }
 
+    private func truncateForMenu(_ text: String, maxLength: Int = 60) -> String {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.count <= maxLength { return trimmed }
+        return String(trimmed.prefix(maxLength)) + "…"
+    }
+
     @objc private func copyLastResult() {
-        let text = lastResultMenuItem.title
-        let value = text.hasPrefix("Last: ") ? String(text.dropFirst(6)) : text
+        let value = lastResultMenuItem.toolTip ?? lastResultMenuItem.title
+            .replacingOccurrences(of: "Last transcription: ", with: "")
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(value, forType: .string)
+    }
+
+    @objc private func copyLastResponse() {
+        let value = lastResponseMenuItem.toolTip ?? lastResponseMenuItem.title
+            .replacingOccurrences(of: "OpenClaw response: ", with: "")
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(value, forType: .string)
     }

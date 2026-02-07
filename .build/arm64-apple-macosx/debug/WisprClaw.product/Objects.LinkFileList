@@ -1,5 +1,8 @@
 /Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AppDelegate.swift.o
 /Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o
+/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o
+/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o
+/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o
 /Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.swift.o
 /Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o
 /Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o

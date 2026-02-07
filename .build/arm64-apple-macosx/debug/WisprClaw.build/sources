@@ -1,6 +1,9 @@
 /Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/AppDelegate.swift
 /Users/arjunsakthi/wisprclaw/Sources/WisprClaw/App/WisprClawApp.swift
 /Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift
+/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift
+/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift
+/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift
 /Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift
 /Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift
 /Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift

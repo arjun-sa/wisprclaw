@@ -23,6 +23,27 @@
     "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swiftdeps",
     "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.dia"
   },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.dia"
+  },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.dia"
+  },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.dia"
+  },
   "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift": {
     "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.d",
     "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
