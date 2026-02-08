@@ -33,6 +33,40 @@ final class ResponsePopupView: NSView {
     var onMouseExit: (() -> Void)?
     private var trackingArea: NSTrackingArea?
 
+    private static func stripMarkdown(_ text: String) -> String {
+        var s = text
+        // Fenced code blocks: remove the ``` lines, keep content
+        s = s.replacingOccurrences(
+            of: "```[^\\n]*\\n([\\s\\S]*?)```",
+            with: "$1",
+            options: .regularExpression
+        )
+        // Inline code
+        s = s.replacingOccurrences(of: "`([^`]+)`", with: "$1", options: .regularExpression)
+        // Images: ![alt](url) → alt
+        s = s.replacingOccurrences(of: "!\\[([^\\]]*)\\]\\([^)]*\\)", with: "$1", options: .regularExpression)
+        // Links: [text](url) → text
+        s = s.replacingOccurrences(of: "\\[([^\\]]*)\\]\\([^)]*\\)", with: "$1", options: .regularExpression)
+        // Headers: strip leading #s
+        s = s.replacingOccurrences(of: "(?m)^#{1,6}\\s+", with: "", options: .regularExpression)
+        // Bold/italic: **text**, __text__, *text*, _text_
+        s = s.replacingOccurrences(of: "\\*\\*(.+?)\\*\\*", with: "$1", options: .regularExpression)
+        s = s.replacingOccurrences(of: "__(.+?)__", with: "$1", options: .regularExpression)
+        s = s.replacingOccurrences(of: "\\*(.+?)\\*", with: "$1", options: .regularExpression)
+        s = s.replacingOccurrences(of: "(?<![a-zA-Z])_(.+?)_(?![a-zA-Z])", with: "$1", options: .regularExpression)
+        // Strikethrough: ~~text~~
+        s = s.replacingOccurrences(of: "~~(.+?)~~", with: "$1", options: .regularExpression)
+        // Blockquotes: strip leading >
+        s = s.replacingOccurrences(of: "(?m)^>\\s?", with: "", options: .regularExpression)
+        // Horizontal rules
+        s = s.replacingOccurrences(of: "(?m)^[-*_]{3,}$", with: "", options: .regularExpression)
+        // Unordered list markers: - or * at line start → bullet
+        s = s.replacingOccurrences(of: "(?m)^(\\s*)[-*+]\\s+", with: "$1• ", options: .regularExpression)
+        // Ordered list markers: 1. 2. etc → keep number with bullet style
+        s = s.replacingOccurrences(of: "(?m)^(\\s*)\\d+\\.\\s+", with: "$1• ", options: .regularExpression)
+        return s
+    }
+
     init(text: String, maxWidth: CGFloat, maxHeight: CGFloat) {
         let padding: CGFloat = 12
         let textWidth = maxWidth - padding * 2
@@ -80,7 +114,7 @@ final class ResponsePopupView: NSView {
         textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = false
         textView.autoresizingMask = [.width]
-        textView.string = text
+        textView.string = Self.stripMarkdown(text)
 
         // Force layout to measure text height
         textView.layoutManager?.ensureLayout(for: textView.textContainer!)

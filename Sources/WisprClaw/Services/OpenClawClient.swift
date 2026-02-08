@@ -3,7 +3,48 @@ import Foundation
 final class OpenClawClient {
     private let protocolVersion = 3
 
+    private var wsTask: URLSessionWebSocketTask?
+    private var bridge: MessageBridge?
+    private var receiveLoopTask: Task<Void, Never>?
+    private var isConnected = false
+
+    deinit {
+        disconnect()
+    }
+
     func send(text: String) async throws -> String {
+        try await ensureConnected()
+
+        do {
+            return try await sendAgentAndExtract(message: text)
+        } catch {
+            // On connection-level failure, reconnect once and retry
+            guard isConnectionError(error) else { throw error }
+            isConnected = false
+            try await ensureConnected()
+            return try await sendAgentAndExtract(message: text)
+        }
+    }
+
+    private func sendAgentAndExtract(message: String) async throws -> String {
+        let agentPayload = try await sendAgentRequest(message: message)
+
+        if agentPayload["status"] as? String == "error" {
+            let errorMsg = agentPayload["error"] as? String ?? agentPayload["message"] as? String ?? "Agent failed"
+            throw NSError(domain: "OpenClaw", code: 0, userInfo: [NSLocalizedDescriptionKey: errorMsg])
+        }
+
+        let result = agentPayload["result"] as? [String: Any] ?? agentPayload
+        return Self.extractPayloadText(from: result)
+    }
+
+    private func ensureConnected() async throws {
+        if isConnected, let ws = wsTask, ws.state == .running {
+            return
+        }
+
+        disconnect()
+
         let baseURL = UserDefaults.standard.string(forKey: "openclawURL") ?? "http://127.0.0.1:18789"
         let token = UserDefaults.standard.string(forKey: "openclawToken")
             ?? EnvLoader.value(for: "GATEWAY_TOKEN")
@@ -18,38 +59,45 @@ final class OpenClawClient {
             throw URLError(.badURL)
         }
 
-        return try await runAgent(url: url, token: token, message: text)
+        let ws = URLSession.shared.webSocketTask(with: url)
+        ws.resume()
+
+        let newBridge = MessageBridge()
+        let loopTask = Task {
+            await self.receiveLoop(task: ws, bridge: newBridge)
+        }
+
+        wsTask = ws
+        bridge = newBridge
+        receiveLoopTask = loopTask
+
+        do {
+            let nonce = try await newBridge.waitForChallenge()
+            try await sendConnect(token: token, nonce: nonce)
+            isConnected = true
+        } catch {
+            disconnect()
+            throw error
+        }
     }
 
-    private func runAgent(url: URL, token: String, message: String) async throws -> String {
-        let task = URLSession.shared.webSocketTask(with: url)
-        task.resume()
+    func disconnect() {
+        receiveLoopTask?.cancel()
+        receiveLoopTask = nil
+        wsTask?.cancel(with: .goingAway, reason: nil)
+        wsTask = nil
+        bridge = nil
+        isConnected = false
+    }
 
-        defer { task.cancel(with: .goingAway, reason: nil) }
-
-        let bridge = MessageBridge()
-        let receiveTask = Task {
-            await receiveLoop(task: task, bridge: bridge)
-        }
-
-        defer { receiveTask.cancel() }
-
-        // Wait for connect.challenge (required for device identity)
-        let nonce = try await bridge.waitForChallenge()
-
-        // Send connect with device identity
-        try await sendConnect(task: task, token: token, nonce: nonce, bridge: bridge)
-
-        // Send agent request
-        let agentPayload = try await sendAgentRequest(task: task, message: message, bridge: bridge)
-
-        if agentPayload["status"] as? String == "error" {
-            let errorMsg = agentPayload["error"] as? String ?? agentPayload["message"] as? String ?? "Agent failed"
-            throw NSError(domain: "OpenClaw", code: 0, userInfo: [NSLocalizedDescriptionKey: errorMsg])
-        }
-
-        let result = agentPayload["result"] as? [String: Any] ?? agentPayload
-        return Self.extractPayloadText(from: result)
+    private func isConnectionError(_ error: Error) -> Bool {
+        if (error as? URLError) != nil { return true }
+        let nsError = error as NSError
+        if nsError.domain == NSPOSIXErrorDomain { return true }
+        // WebSocket close / cancellation errors
+        let code = (error as NSError).code
+        if nsError.domain == "NSURLErrorDomain" || code == -1005 || code == -1009 { return true }
+        return false
     }
 
     private func receiveLoop(task: URLSessionWebSocketTask, bridge: MessageBridge) async {
@@ -68,6 +116,7 @@ final class OpenClawClient {
                     await bridge.deliver(parsed)
                 }
             } catch {
+                isConnected = false
                 await bridge.deliverError(error)
                 break
             }
@@ -85,7 +134,10 @@ final class OpenClawClient {
         return d
     }
 
-    private func sendConnect(task: URLSessionWebSocketTask, token: String, nonce: String?, bridge: MessageBridge) async throws {
+    private func sendConnect(token: String, nonce: String?) async throws {
+        guard let task = wsTask, let bridge = bridge else {
+            throw NSError(domain: "OpenClaw", code: 0, userInfo: [NSLocalizedDescriptionKey: "No active WebSocket connection"])
+        }
         let connectId = UUID().uuidString
         let scopes = ["operator.read", "operator.write"]
         let role = "operator"
@@ -146,7 +198,10 @@ final class OpenClawClient {
         }
     }
 
-    private func sendAgentRequest(task: URLSessionWebSocketTask, message: String, bridge: MessageBridge) async throws -> [String: Any] {
+    private func sendAgentRequest(message: String) async throws -> [String: Any] {
+        guard let task = wsTask, let bridge = bridge else {
+            throw NSError(domain: "OpenClaw", code: 0, userInfo: [NSLocalizedDescriptionKey: "No active WebSocket connection"])
+        }
         let reqId = UUID().uuidString
         let idempotencyKey = UUID().uuidString
 
@@ -255,5 +310,15 @@ private actor MessageBridge {
         try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[String: Any], Error>) in
             pending[id] = cont
         }
+    }
+
+    func reset() {
+        challengeContinuation = nil
+        bufferedNonce = nil
+        challengeBuffered = false
+        for (_, cont) in pending {
+            cont.resume(throwing: CancellationError())
+        }
+        pending.removeAll()
     }
 }

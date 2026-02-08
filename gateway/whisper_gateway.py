@@ -239,8 +239,17 @@ def health() -> dict[str, str]:
 
 
 @app.post("/transcribe")
-async def transcribe(audio: UploadFile = File(...)) -> dict[str, str]:
-    """Accept multipart audio file and return transcribed text."""
+async def transcribe(
+    audio: UploadFile = File(...),
+    compress: str | None = None,
+) -> dict[str, str]:
+    """Accept multipart audio file and return transcribed text.
+
+    The optional ``compress`` query parameter overrides the server-wide
+    ``LLMLINGUA_ENABLED`` setting for this single request.  Accepted values
+    are ``1``/``true``/``yes``/``on`` to enable and ``0``/``false``/``no``/``off``
+    to disable.
+    """
     raw_audio = await audio.read()
     if not raw_audio:
         raise HTTPException(status_code=400, detail="Empty audio upload")
@@ -249,6 +258,12 @@ async def transcribe(audio: UploadFile = File(...)) -> dict[str, str]:
             status_code=413,
             detail=f"Audio too large. Max allowed is {MAX_AUDIO_BYTES} bytes",
         )
+
+    # Determine whether to compress: per-request param overrides global default
+    if compress is not None:
+        should_compress = _is_truthy(compress)
+    else:
+        should_compress = LLMLINGUA_ENABLED
 
     suffix = Path(audio.filename or "recording.wav").suffix or ".wav"
     temp_path = ""
@@ -262,7 +277,7 @@ async def transcribe(audio: UploadFile = File(...)) -> dict[str, str]:
         result = model.transcribe(temp_path, fp16=False)
         original_text = (result.get("text") or "").strip()
         compressed_text = (
-            compress_transcript(original_text) if LLMLINGUA_ENABLED else original_text
+            compress_transcript(original_text) if should_compress else original_text
         )
         timestamp = datetime.now().isoformat(timespec="seconds")
         print(

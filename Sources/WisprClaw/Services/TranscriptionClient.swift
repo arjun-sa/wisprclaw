@@ -10,7 +10,9 @@ final class TranscriptionClient {
     }
 
     func transcribe(fileURL: URL, gatewayURL: String) async throws -> String {
-        guard let url = URL(string: gatewayURL + "/transcribe") else {
+        let compressEnabled = UserDefaults.standard.bool(forKey: "llmlinguaEnabled")
+        let endpoint = gatewayURL + "/transcribe?compress=\(compressEnabled ? "1" : "0")"
+        guard let url = URL(string: endpoint) else {
             throw URLError(.badURL)
         }
 

@@ -1,0 +1,138 @@
+# WisprClaw
+
+WisprClaw is a macOS menu bar voice assistant client that records speech, transcribes it with a local Whisper gateway, and sends the resulting text to an OpenClaw agent.
+
+## What It Does
+
+- Runs as a menu bar app on macOS.
+- Starts/stops recording via menu action (`Start Recording` / `Stop Recording`) or double-tap `⌘` global hotkey (toggleable in settings).
+- Records microphone input to temporary WAV.
+- Sends audio to a local Python gateway (`/transcribe`).
+- Gateway transcribes audio with Whisper.
+- Gateway can optionally compress transcript with LLMLingua before returning text.
+- Sends returned text to OpenClaw over WebSocket Gateway protocol (v3).
+- Shows the agent response in both the menu bar item and a floating popup (`ResponsePopupPanel`).
+
+## Architecture
+
+1. `AudioRecorder` captures mic audio and writes `.wav`.
+2. `TranscriptionClient` uploads the file as multipart form-data to `POST {gatewayURL}/transcribe`.
+3. `gateway/whisper_gateway.py` loads `.env`, runs Whisper STT, optionally applies LLMLingua compression (`LLMLINGUA_ENABLED`), and returns `{"text": "..."}`.
+4. `OpenClawClient` connects to OpenClaw via WebSocket and sends an `agent` request.
+5. `StatusItemManager` updates UI state and displays/copies transcript/response.
+
+## Repository Layout
+
+- `Sources/WisprClaw/App` app entry points (`WisprClawApp`, `AppDelegate`)
+- `Sources/WisprClaw/Services` recorder, gateway clients, hotkey, env loader, device identity
+- `Sources/WisprClaw/Views` settings and response popup UI
+- `gateway/whisper_gateway.py` main Python transcription gateway (Whisper + LLMLingua)
+- `gateway/main.py` older stub gateway (not used in main flow)
+
+## Requirements
+
+- macOS 13+
+- Swift 5.9+
+- Python 3.10+ (3.12 works)
+- OpenClaw gateway running locally (default `http://127.0.0.1:18789`)
+- `ffmpeg` installed (needed by Whisper)
+
+Python packages for gateway:
+
+```bash
+pip install fastapi "uvicorn[standard]" python-multipart openai-whisper llmlingua accelerate certifi
+```
+
+## Quick Start
+
+### 1) Configure environment
+
+Create `.env` in repo root:
+
+```dotenv
+GATEWAY_TOKEN="your_openclaw_gateway_token"
+
+WHISPER_MODEL=base
+WHISPER_DOWNLOAD_ROOT=~/.cache/whisper
+WHISPER_SSL_CA_FILE=/path/to/ca-bundle.pem
+WHISPER_INSECURE_DOWNLOAD=0
+
+LLMLINGUA_ENABLED=0
+LLMLINGUA_MODEL=microsoft/llmlingua-2-xlm-roberta-large-meetingbank
+LLMLINGUA_DEVICE=auto
+LLMLINGUA_RATE=0.6
+LLMLINGUA_USE_V2=1
+
+GATEWAY_HOST=127.0.0.1
+GATEWAY_PORT=8001
+MAX_AUDIO_MB=25
+```
+
+### 2) Start transcription gateway
+
+From repo root:
+
+```bash
+python3 gateway/whisper_gateway.py
+```
+
+### 3) Run macOS app
+
+```bash
+swift run WisprClaw
+```
+
+Or open the Swift package in Xcode and run the `WisprClaw` target.
+
+## App Settings
+
+In `Settings...`:
+
+**General tab:**
+- `Transcription Gateway URL` default: `http://localhost:8001`
+- `Compress with LLMLingua` on/off — compresses the transcript before sending to the agent, reducing input tokens. Requires `llmlingua` and `accelerate` installed in the gateway Python environment.
+- `Double-tap ⌘ to record` on/off
+
+**AI Agent tab:**
+- `OpenClaw URL` default: `http://127.0.0.1:18789`
+- `Gateway Token` optional in UI; if empty, falls back to `GATEWAY_TOKEN` or `OPENCLAW_GATEWAY_TOKEN` in `.env`
+
+## LLMLingua Transcript Compression
+
+WisprClaw optionally compresses voice transcripts using [LLMLingua](https://github.com/microsoft/LLMLingua) before sending them to the OpenClaw agent. This reduces input token count (typically ~40% reduction at the default rate) which lowers cost and can improve agent response latency.
+
+**How it works:**
+1. Whisper transcribes audio to text
+2. If LLMLingua is enabled, the gateway runs the transcript through a compression model (`microsoft/llmlingua-2-xlm-roberta-large-meetingbank` by default)
+3. The compressed text is sent to the OpenClaw agent instead of the raw transcript
+
+**Enabling/disabling:**
+- Toggle "Compress with LLMLingua" in Settings → General (takes effect immediately, no gateway restart needed)
+- Or set `LLMLINGUA_ENABLED=1` in `.env` for the server-side default
+
+**Configuration (`.env`):**
+- `LLMLINGUA_ENABLED` — server default: `1` (on). The macOS Settings toggle overrides this per-request.
+- `LLMLINGUA_MODEL` — compression model (default: `microsoft/llmlingua-2-xlm-roberta-large-meetingbank`)
+- `LLMLINGUA_RATE` — target compression rate, 0.0–1.0 (default: `0.6`, meaning ~60% of original tokens retained)
+- `LLMLINGUA_DEVICE` — compute device: `auto` (default), `mps`, `cuda`, or `cpu`
+- `LLMLINGUA_USE_V2` — use LLMLingua-2 API (default: `1`)
+
+**Requirements:**
+```bash
+pip install llmlingua accelerate
+```
+
+The gateway auto-detects the best device (MPS on Apple Silicon, CUDA on NVIDIA GPUs, CPU fallback).
+
+## Notes
+
+- Device identity keys are persisted at `~/.openclaw/wisprclaw-device.json`.
+- The Python gateway prints both the original Whisper transcript and the final transcript returned to Swift (compressed or original, depending on toggle).
+- Changing `.env` values requires restarting `gateway/whisper_gateway.py`.
+
+## Troubleshooting
+
+- `certificate verify failed` during Whisper model download: set `WHISPER_SSL_CA_FILE` to a trusted CA bundle, or set `WHISPER_INSECURE_DOWNLOAD=1` as a last resort.
+- `torch not compiled with cuda enabled` on Apple Silicon: use `LLMLINGUA_DEVICE=auto` or `LLMLINGUA_DEVICE=cpu`.
+- `LLMLINGUA_ENABLED=0` but old behavior persists: restart the Python gateway process (env values are read at startup).
+- OpenClaw connection issues: verify the OpenClaw gateway is running and URL/token are correct in Settings or `.env`.

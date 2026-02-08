@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("openclawURL") private var openclawURL = "http://127.0.0.1:18789"
     @AppStorage("openclawToken") private var openclawToken = ""
     @AppStorage("doubleTapCmdEnabled") private var doubleTapCmdEnabled = true
+    @AppStorage("llmlinguaEnabled") private var llmlinguaEnabled = false
 
     var body: some View {
         TabView {
@@ -41,8 +42,11 @@ struct SettingsView: View {
 
             Section {
                 TextField("URL", text: $gatewayURL)
+                Toggle("Compress with LLMLingua", isOn: $llmlinguaEnabled)
             } header: {
                 Text("Transcription Gateway")
+            } footer: {
+                Text("LLMLingua reduces input tokens sent to the agent by compressing the transcript. Requires llmlingua installed in the gateway.")
             }
         }
         .formStyle(.grouped)
