@@ -37,6 +37,13 @@
     "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swiftdeps",
     "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.dia"
   },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.dia"
+  },
   "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift": {
     "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.d",
     "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o",
@@ -57,6 +64,13 @@
     "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient~partial.swiftmodule",
     "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swiftdeps",
     "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.dia"
+  },
+  "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift": {
+    "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.d",
+    "object": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.swift.o",
+    "swiftmodule": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel~partial.swiftmodule",
+    "swift-dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.swiftdeps",
+    "diagnostics": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.dia"
   },
   "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift": {
     "dependencies": "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.d",

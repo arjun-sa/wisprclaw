@@ -44,6 +44,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift"
         },
         {
@@ -53,6 +57,10 @@
         {
           "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift"
         },
         {
           "kind" : "file",
@@ -76,9 +84,11 @@
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.swift.o"
       ],
       "otherArguments" : [
@@ -161,6 +171,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o"
         },
         {
@@ -170,6 +184,10 @@
         {
           "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.swift.o"
         },
         {
           "kind" : "file",
@@ -187,9 +205,11 @@
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift"
       ],
       "tempsPath" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build",
@@ -212,9 +232,11 @@
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift",
       "-I",
       "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/Modules",
@@ -336,6 +358,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift"
         },
         {
@@ -345,6 +371,10 @@
         {
           "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift"
         },
         {
           "kind" : "file",
@@ -378,7 +408,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/.build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.swift.o"
         },
         {
           "kind" : "file",

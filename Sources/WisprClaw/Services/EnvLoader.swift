@@ -51,6 +51,10 @@ enum EnvLoader {
             // Go up to project root (executable is in .build/debug/ or .build/release/)
             let buildDir = (execDir as NSString).deletingLastPathComponent
             paths.append(buildDir)
+            let projectRoot = (buildDir as NSString).deletingLastPathComponent
+            paths.append(projectRoot)
+            // gateway/ subdirectory (where whisper_gateway.py and its .env live)
+            paths.append(projectRoot + "/gateway")
         }
 
         // User config directory

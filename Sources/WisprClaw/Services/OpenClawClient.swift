@@ -188,6 +188,8 @@ final class OpenClawClient {
 private actor MessageBridge {
     private var pending: [String: CheckedContinuation<[String: Any], Error>] = [:]
     private var challengeContinuation: CheckedContinuation<String?, Error>?
+    private var bufferedNonce: String?
+    private var challengeBuffered = false
 
     func deliver(_ message: [String: Any]) {
         if message["type"] as? String == "event" {
@@ -195,8 +197,14 @@ private actor MessageBridge {
             if event == "connect.challenge" {
                 let payload = message["payload"] as? [String: Any]
                 let nonce = payload?["nonce"] as? String
-                challengeContinuation?.resume(returning: nonce)
-                challengeContinuation = nil
+                if let cont = challengeContinuation {
+                    challengeContinuation = nil
+                    cont.resume(returning: nonce)
+                } else {
+                    // Challenge arrived before waitForChallenge — buffer it
+                    bufferedNonce = nonce
+                    challengeBuffered = true
+                }
             }
             return
         }
@@ -234,7 +242,11 @@ private actor MessageBridge {
     }
 
     func waitForChallenge() async throws -> String? {
-        try await withCheckedThrowingContinuation { (cont: CheckedContinuation<String?, Error>) in
+        // If the challenge already arrived before we started waiting, return it immediately
+        if challengeBuffered {
+            return bufferedNonce
+        }
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<String?, Error>) in
             challengeContinuation = cont
         }
     }

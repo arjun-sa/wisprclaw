@@ -4,6 +4,7 @@ struct SettingsView: View {
     @AppStorage("gatewayURL") private var gatewayURL = "http://localhost:8001"
     @AppStorage("openclawURL") private var openclawURL = "http://127.0.0.1:18789"
     @AppStorage("openclawToken") private var openclawToken = ""
+    @AppStorage("doubleTapCmdEnabled") private var doubleTapCmdEnabled = true
 
     var body: some View {
         TabView {
@@ -17,18 +18,25 @@ struct SettingsView: View {
                     Label("AI Agent", systemImage: "brain")
                 }
         }
-        .frame(width: 400, height: 350)
+        .frame(width: 400, height: 380)
     }
 
     private var generalTab: some View {
         Form {
             Section {
-                LabeledContent("Shortcut") {
-                    Text("Not configured")
-                        .foregroundStyle(.secondary)
+                Toggle(isOn: $doubleTapCmdEnabled) {
+                    HStack {
+                        Text("Double-tap")
+                        Text("⌘")
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(RoundedRectangle(cornerRadius: 4).fill(Color.secondary.opacity(0.2)))
+                        Text("to record")
+                    }
                 }
             } header: {
-                Text("Global Hotkey")
+                Text("Activation")
             }
 
             Section {
@@ -44,13 +52,26 @@ struct SettingsView: View {
         Form {
             Section {
                 TextField("URL", text: $openclawURL)
-                SecureField("Auth Token", text: $openclawToken)
             } header: {
                 Text("OpenClaw")
+            }
+
+            Section {
+                TextField("Gateway Token", text: $openclawToken)
+                    .font(.system(.body, design: .monospaced))
+            } header: {
+                Text("Authentication")
             } footer: {
-                Text("Uses the Gateway WebSocket protocol. URL and token from ~/.openclaw/openclaw.json (gateway.auth.token).")
+                Text("Token for the OpenClaw gateway. Also read from GATEWAY_TOKEN in gateway/.env if left empty.")
             }
         }
         .formStyle(.grouped)
+        .onAppear {
+            if openclawToken.isEmpty {
+                openclawToken = EnvLoader.value(for: "GATEWAY_TOKEN")
+                    ?? EnvLoader.value(for: "OPENCLAW_GATEWAY_TOKEN")
+                    ?? ""
+            }
+        }
     }
 }

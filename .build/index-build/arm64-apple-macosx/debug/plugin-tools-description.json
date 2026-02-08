@@ -44,6 +44,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift"
         },
         {
@@ -53,6 +57,10 @@
         {
           "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift"
         },
         {
           "kind" : "file",
@@ -76,9 +84,11 @@
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/AudioRecorder.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/DeviceIdentity.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/EnvLoader.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/GlobalHotkeyManager.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/OpenClawClient.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/StatusItemManager.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/TranscriptionClient.swift.o",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/ResponsePopupPanel.swift.o",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build/SettingsView.swift.o"
       ],
       "otherArguments" : [
@@ -87,6 +97,8 @@
         "-incremental",
         "-enable-batch-mode",
         "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
         "-j10",
@@ -96,10 +108,6 @@
         "-module-cache-path",
         "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
         "-parseable-output",
-        "-Xfrontend",
-        "-entry-point-function-name",
-        "-Xfrontend",
-        "WisprClaw_main",
         "-swift-version",
         "5",
         "-Xfrontend",
@@ -113,7 +121,7 @@
         "-plugin-path",
         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
         "-sdk",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
         "-F",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
         "-F",
@@ -126,7 +134,7 @@
         "-Xcc",
         "-isysroot",
         "-Xcc",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
         "-Xcc",
         "-F",
         "-Xcc",
@@ -156,9 +164,11 @@
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
+        "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift",
         "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift"
       ],
       "tempsPath" : "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/WisprClaw.build",
@@ -181,9 +191,11 @@
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/AudioRecorder.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/DeviceIdentity.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/EnvLoader.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/StatusItemManager.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift",
+      "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift",
       "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/SettingsView.swift",
       "-I",
       "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/Modules",
@@ -192,6 +204,8 @@
       "-incremental",
       "-enable-batch-mode",
       "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
       "-j10",
@@ -201,10 +215,6 @@
       "-module-cache-path",
       "/Users/arjunsakthi/wisprclaw/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
       "-parseable-output",
-      "-Xfrontend",
-      "-entry-point-function-name",
-      "-Xfrontend",
-      "WisprClaw_main",
       "-swift-version",
       "5",
       "-Xfrontend",
@@ -218,7 +228,7 @@
       "-plugin-path",
       "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
       "-sdk",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
       "-F",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
       "-F",
@@ -231,7 +241,7 @@
       "-Xcc",
       "-isysroot",
       "-Xcc",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
       "-Xcc",
       "-F",
       "-Xcc",
@@ -296,6 +306,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/GlobalHotkeyManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/OpenClawClient.swift"
         },
         {
@@ -305,6 +319,10 @@
         {
           "kind" : "file",
           "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Services/TranscriptionClient.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/arjunsakthi/wisprclaw/Sources/WisprClaw/Views/ResponsePopupPanel.swift"
         },
         {
           "kind" : "file",

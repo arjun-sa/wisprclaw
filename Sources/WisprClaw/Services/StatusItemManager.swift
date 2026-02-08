@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-final class StatusItemManager {
+final class StatusItemManager: NSObject, NSWindowDelegate {
     enum AppState {
         case idle
         case listening
@@ -14,21 +14,28 @@ final class StatusItemManager {
     private let client = TranscriptionClient()
     private let openClaw = OpenClawClient()
     private var appState: AppState = .idle
+    private var hotkeyManager: GlobalHotkeyManager?
 
     // Dynamic menu items
     private var statusMenuItem: NSMenuItem!
     private var toggleMenuItem: NSMenuItem!
     private var lastResultMenuItem: NSMenuItem!
     private var lastResponseMenuItem: NSMenuItem!
+    private var settingsWindow: NSWindow?
 
-    init() {
+    override init() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        super.init()
 
         if let button = statusItem.button {
             button.image = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: "WisprClaw")
         }
 
         buildMenu()
+
+        hotkeyManager = GlobalHotkeyManager { [weak self] in
+            self?.toggleRecording()
+        }
     }
 
     private func buildMenu() {
@@ -124,6 +131,7 @@ final class StatusItemManager {
                         await MainActor.run {
                             self.lastResponseMenuItem.title = "OpenClaw response: \(self.truncateForMenu(response))"
                             self.lastResponseMenuItem.toolTip = response
+                            ResponsePopupController.shared.show(text: response)
                             self.updateState(.idle)
                         }
                     } catch {
@@ -167,8 +175,32 @@ final class StatusItemManager {
     }
 
     @objc private func openSettings() {
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        NSApp.setActivationPolicy(.regular)
+
+        if let window = settingsWindow {
+            window.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 380),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "WisprClaw Settings"
+        window.contentView = NSHostingView(rootView: SettingsView())
+        window.center()
+        window.isReleasedWhenClosed = false
+        window.delegate = self
+        settingsWindow = window
+        window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        NSApp.setActivationPolicy(.accessory)
     }
 
     @objc private func quit() {

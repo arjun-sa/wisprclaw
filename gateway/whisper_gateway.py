@@ -1,21 +1,3 @@
-"""Standalone Whisper transcription gateway for WisprClaw.
-
-Run:
-  python whisper_gateway.py
-
-Required packages:
-  pip install fastapi "uvicorn[standard]" python-multipart openai-whisper
-
-Environment variables:
-  WHISPER_MODEL=base        # tiny, base, small, medium, large
-  WHISPER_DOWNLOAD_ROOT=~/.cache/whisper
-  WHISPER_SSL_CA_FILE=/path/to/ca-bundle.pem
-  WHISPER_INSECURE_DOWNLOAD=0   # set 1 only as last resort
-  GATEWAY_HOST=127.0.0.1
-  GATEWAY_PORT=8001
-  MAX_AUDIO_MB=25
-"""
-
 from __future__ import annotations
 
 import os
@@ -30,18 +12,87 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 import uvicorn
 
 
+def _is_truthy(value: str | None, default: bool = False) -> bool:
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _load_dotenv() -> None:
+    """Load .env values into process env if not already exported.
+
+    Search order:
+    1) current working directory
+    2) gateway directory
+    3) project root (parent of gateway directory)
+    """
+    search_paths = [
+        Path.cwd() / ".env",
+        Path(__file__).resolve().parent / ".env",
+        Path(__file__).resolve().parent.parent / ".env",
+    ]
+    seen: set[Path] = set()
+
+    for env_path in search_paths:
+        resolved = env_path.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+
+        if not env_path.exists():
+            continue
+
+        try:
+            lines = env_path.read_text(encoding="utf-8").splitlines()
+        except OSError:
+            continue
+
+        for raw_line in lines:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+
+            if key.startswith("export "):
+                key = key[len("export ") :].strip()
+
+            if not key:
+                continue
+
+            if value.startswith('"') and value.endswith('"') and len(value) >= 2:
+                value = value[1:-1]
+            elif value.startswith("'") and value.endswith("'") and len(value) >= 2:
+                value = value[1:-1]
+            else:
+                value = value.split(" #", 1)[0].strip()
+
+            os.environ.setdefault(key, value)
+
+        # Stop at the first .env file found in the search order.
+        break
+
+
+_load_dotenv()
+
 MODEL_NAME = os.getenv("WHISPER_MODEL", "base")
 WHISPER_DOWNLOAD_ROOT = os.getenv("WHISPER_DOWNLOAD_ROOT")
 WHISPER_SSL_CA_FILE = os.getenv("WHISPER_SSL_CA_FILE")
-WHISPER_INSECURE_DOWNLOAD = os.getenv("WHISPER_INSECURE_DOWNLOAD", "0").lower() in {
-    "1",
-    "true",
-    "yes",
-}
+WHISPER_INSECURE_DOWNLOAD = _is_truthy(os.getenv("WHISPER_INSECURE_DOWNLOAD", "0"))
+LLMLINGUA_MODEL = os.getenv(
+    "LLMLINGUA_MODEL", "microsoft/llmlingua-2-xlm-roberta-large-meetingbank"
+)
+LLMLINGUA_ENABLED = _is_truthy(os.getenv("LLMLINGUA_ENABLED", "1"), default=True)
+LLMLINGUA_DEVICE = os.getenv("LLMLINGUA_DEVICE", "auto").strip().lower()
+LLMLINGUA_RATE = float(os.getenv("LLMLINGUA_RATE", "0.6"))
+LLMLINGUA_USE_V2 = _is_truthy(os.getenv("LLMLINGUA_USE_V2", "1"), default=True)
 MAX_AUDIO_BYTES = int(os.getenv("MAX_AUDIO_MB", "25")) * 1024 * 1024
 
 app = FastAPI(title="WisprClaw Whisper Gateway")
 _model = None
+_compressor = None
 
 
 def configure_whisper_download_tls() -> None:
@@ -55,6 +106,8 @@ def configure_whisper_download_tls() -> None:
         return
 
     ca_file = WHISPER_SSL_CA_FILE or os.getenv("SSL_CERT_FILE")
+    if ca_file and not Path(ca_file).expanduser().is_file():
+        ca_file = None
     if not ca_file:
         try:
             import certifi
@@ -107,6 +160,79 @@ def get_model() -> Any:
     return _model
 
 
+def get_compressor() -> Any:
+    """Load LLMLingua once per process and reuse across requests."""
+    global _compressor
+    if _compressor is not None:
+        return _compressor
+
+    try:
+        from llmlingua import PromptCompressor
+    except ImportError as exc:
+        raise RuntimeError(
+            "llmlingua is not installed. "
+            "Install with: pip install llmlingua accelerate"
+        ) from exc
+
+    init_kwargs: dict[str, Any] = {"model_name": LLMLINGUA_MODEL}
+
+    device_map = LLMLINGUA_DEVICE
+    if device_map == "auto":
+        try:
+            import torch
+
+            if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
+                device_map = "mps"
+            elif torch.cuda.is_available():
+                device_map = "cuda"
+            else:
+                device_map = "cpu"
+        except Exception:
+            device_map = "cpu"
+    init_kwargs["device_map"] = device_map
+
+    if LLMLINGUA_USE_V2:
+        init_kwargs["use_llmlingua2"] = True
+
+    _compressor = PromptCompressor(**init_kwargs)
+    return _compressor
+
+
+def extract_compressed_text(compression_result: Any, original_text: str = "") -> str:
+    """Normalize LLMLingua output across versions."""
+    if isinstance(compression_result, str):
+        return compression_result.strip()
+
+    if isinstance(compression_result, dict):
+        for key in ("compressed_prompt", "compressed_text", "prompt", "text"):
+            value = compression_result.get(key)
+            if isinstance(value, str):
+                return value.strip()
+
+    if original_text:
+        return original_text
+    raise RuntimeError("LLMLingua returned an unexpected compression result")
+
+
+def compress_transcript(text: str) -> str:
+    compressor = get_compressor()
+    clean_text = text.strip()
+    if not clean_text:
+        return clean_text
+
+    context = [clean_text]
+
+    try:
+        if LLMLINGUA_USE_V2 and hasattr(compressor, "compress_prompt_llmlingua2"):
+            result = compressor.compress_prompt_llmlingua2(context, rate=LLMLINGUA_RATE)
+        else:
+            result = compressor.compress_prompt(context, rate=LLMLINGUA_RATE)
+    except TypeError:
+        result = compressor.compress_prompt(context, rate=LLMLINGUA_RATE)
+
+    return extract_compressed_text(result, original_text=clean_text)
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok", "model": MODEL_NAME}
@@ -134,12 +260,20 @@ async def transcribe(audio: UploadFile = File(...)) -> dict[str, str]:
 
         model = get_model()
         result = model.transcribe(temp_path, fp16=False)
-        text = (result.get("text") or "").strip()
+        original_text = (result.get("text") or "").strip()
+        compressed_text = (
+            compress_transcript(original_text) if LLMLINGUA_ENABLED else original_text
+        )
+        timestamp = datetime.now().isoformat(timespec="seconds")
         print(
-            f"[{datetime.now().isoformat(timespec='seconds')}] transcript: {text}",
+            f"[{timestamp}] transcript_original: {original_text}",
             flush=True,
         )
-        return {"text": text}
+        print(
+            f"[{timestamp}] transcript_compressed: {compressed_text}",
+            flush=True,
+        )
+        return {"text": compressed_text}
     except RuntimeError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     except Exception as exc:
