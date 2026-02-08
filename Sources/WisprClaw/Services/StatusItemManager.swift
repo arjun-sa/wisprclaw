@@ -28,7 +28,7 @@ final class StatusItemManager: NSObject, NSWindowDelegate {
         super.init()
 
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: "WisprClaw")
+            button.image = NSImage(systemSymbolName: "apple.intelligence", accessibilityDescription: "WisprClaw")
         }
 
         buildMenu()
@@ -80,7 +80,7 @@ final class StatusItemManager: NSObject, NSWindowDelegate {
             statusMenuItem.title = "Status: Idle"
             toggleMenuItem.title = "Start Recording"
             toggleMenuItem.isEnabled = true
-            statusItem.button?.image = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: "WisprClaw")
+            statusItem.button?.image = NSImage(systemSymbolName: "apple.intelligence", accessibilityDescription: "WisprClaw")
         case .listening:
             statusMenuItem.title = "Status: Listening"
             toggleMenuItem.title = "Stop Recording"
